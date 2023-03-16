@@ -1,32 +1,28 @@
 import express from 'express';
 import session from 'express-session';
-import RedisStore from 'connect-redis';
-import { createClient } from 'redis';
-import config from './config';
 import logger from './utils/logger';
-import './utils/db';
+import router from './routes';
+import { redisStore } from './utils/db';
+import { SECRET } from './config';
 
 const app = express();
-const redisClient = createClient()
-  .connect()
-  .then(() => console.log('bağlandı'))
-  .catch(console.error);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(logger)
+app.use(logger);
 app.use(
   session({
-    store: new RedisStore({ client: redisClient, prefix: 'app:' }),
+    store: redisStore,
     resave: false,
     saveUninitialized: false,
-    secret: config.SECRET
+    secret: SECRET
   })
 );
 
-app.get('/', (req, res) => {
+app.use(router);
+
+app.get('/', (_req, res) => {
   res.send('kartaca cekirdekten yetisenler case');
 });
 
-export { logger };
 export default app;

@@ -1,6 +1,7 @@
-import app, { logger } from './app';
+import app from './app';
+import { logger } from './utils/logger';
 import { HOST, PORT } from './config';
 
 app.listen(PORT, () => {
-    logger.logger.info(`server listening on ${HOST}:${PORT}`)
+  logger.info(`server listening on ${HOST}:${PORT}`);
 });

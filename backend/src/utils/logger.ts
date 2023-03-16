@@ -1,8 +1,9 @@
-import pinoHttp from "pino-http";
+import pinoHttp from 'pino-http';
 
-const logger = pinoHttp({
+const pino = pinoHttp({
   transport: { target: 'pino-pretty' },
   base: { pid: false }
 });
 
-export default logger
+export const { logger } = pino;
+export default pino;
