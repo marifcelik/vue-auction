@@ -1,8 +1,7 @@
 import pinoHttp from 'pino-http';
 
 const pino = pinoHttp({
-  transport: { target: 'pino-pretty' },
-  base: { pid: false }
+  transport: { target: 'pino-pretty' }
 });
 
 export const { logger } = pino;
