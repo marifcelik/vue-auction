@@ -21,7 +21,11 @@ try {
   const redisClient = createClient();
   await redisClient.connect();
   logger.info('connected to redis');
-  redisStore = new (RedisStore as any)({ client: redisClient, prefix: 'app:' });
+  redisStore = new (RedisStore as any)({
+    client: redisClient,
+    prefix: 'app:',
+    disableTouch: false
+  });
 } catch (err) {
   logger.error('redis connection error');
   logger.error(err);
