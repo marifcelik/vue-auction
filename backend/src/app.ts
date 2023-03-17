@@ -1,21 +1,24 @@
 import express from 'express';
 import session from 'express-session';
-import logger from './utils/logger';
-import router from './routes';
+import pino from './utils/logger';
+import router from './routers';
 import { redisStore } from './utils/db';
-import { SECRET } from './config';
+import { COOKIE_NAME, SECRET } from './config';
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(logger);
+app.use(pino);
 app.use(
   session({
     store: redisStore,
+    name: COOKIE_NAME,
     resave: false,
+    rolling: true,
     saveUninitialized: false,
-    secret: SECRET
+    secret: SECRET,
+    cookie: { maxAge: 1000 * 20 }
   })
 );
 
