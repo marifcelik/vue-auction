@@ -15,7 +15,7 @@ specifiers:
   express: ^4.18.2
   express-session: ^1.17.3
   jsonwebtoken: ^9.0.0
-  mongoose: ^7.0.1
+  mongoose: ^7.0.2
   nodemon: ^2.0.21
   pino-http: ^8.3.3
   pino-pretty: ^10.0.0
@@ -36,7 +36,7 @@ dependencies:
   express: 4.18.2
   express-session: 1.17.3
   jsonwebtoken: 9.0.0
-  mongoose: 7.0.1
+  mongoose: 7.0.2
   pino-http: 8.3.3
   redis: 4.6.5
   ws: 8.13.0
@@ -394,8 +394,8 @@ packages:
       fill-range: 7.0.1
     dev: true
 
-  /bson/5.0.1:
-    resolution: {integrity: sha512-y09gBGusgHtinMon/GVbv1J6FrXhnr/+6hqLlSmEFzkz6PodqF6TxjyvfvY3AfO+oG1mgUtbC86xSbOlwvM62Q==}
+  /bson/5.1.0:
+    resolution: {integrity: sha512-FEecNHkhYRBe7X9KDkdG12xNuz5VHGeH6mCE0B5sBmYtiR/Ux/9vUH/v4NUoBCDr6NuEhvahjoLiiRogptVW0A==}
     engines: {node: '>=14.20.1'}
     dev: false
 
@@ -1117,18 +1117,18 @@ packages:
       snappy:
         optional: true
     dependencies:
-      bson: 5.0.1
+      bson: 5.1.0
       mongodb-connection-string-url: 2.6.0
       socks: 2.7.1
     optionalDependencies:
       saslprep: 1.0.3
     dev: false
 
-  /mongoose/7.0.1:
-    resolution: {integrity: sha512-fxm2bPRG457Hb8RLwN8cMCokK8HNem/7g+qp5SrHC7Pt4Z4jqn1+/3cuc8W7uqehKDWEtpirggI7uw08x2ZIjQ==}
+  /mongoose/7.0.2:
+    resolution: {integrity: sha512-whX+5lAOLOs6VXRr9w+6m5qb8m/IXWLLb9+0/HRUh2TiIYtTt7UvajK92zW6wllCjBkrrnz/MDIOTCWMbs8K4g==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      bson: 5.0.1
+      bson: 5.1.0
       kareem: 2.5.1
       mongodb: 5.1.0
       mpath: 0.9.0

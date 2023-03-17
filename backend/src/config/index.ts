@@ -9,6 +9,7 @@ export const HOST = process.env.HOST ?? 'localhost',
   DB_HOST = process.env.DB_HOST ?? '127.0.0.1',
   DB_PORT = process.env.DB_PORT ?? 28014,
   DB_CONN_STR = process.env.DB_CONN_STR ?? '',
-  SECRET = process.env.SECRET ?? 'do not use secret like this';
+  SECRET = process.env.SECRET ?? 'do not use secret like this',
+  COOKIE_NAME = process.env.COOKIE_NAME ?? 'sessionid';
 
-export default { HOST, PORT, DB, DB_HOST, DB_PORT, SECRET };
+export default { HOST, PORT, DB, DB_HOST, DB_PORT, SECRET, COOKIE_NAME };
