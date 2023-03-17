@@ -8,7 +8,7 @@ import { COOKIE_NAME, SECRET } from './config';
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(pino);
 app.use(
   session({
@@ -18,7 +18,7 @@ app.use(
     rolling: true,
     saveUninitialized: false,
     secret: SECRET,
-    cookie: { maxAge: 1000 * 20 }
+    cookie: { maxAge: 1000 * 30 }
   })
 );
 
@@ -29,3 +29,10 @@ app.get('/', (_req, res) => {
 });
 
 export default app;
+
+// for req.session.user issue
+declare module 'express-session' {
+  export interface SessionData {
+    user: { [key: string]: any };
+  }
+}
