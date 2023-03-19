@@ -26,8 +26,8 @@ class UserController {
       : res.status(404).json({ message: 'user not found' });
   }
 
-  async getAllUsers(_: Request, res: Response) {
-    const [result, err] = await jobHandler(User.find());
+  async getAllUsers(_req: Request, res: Response) {
+    const [result, err] = await jobHandler(User.find().select('-password -createdAt -updatedAt'));
     if (err) return res.status(500).json({ err });
 
     return res.status(200).json({ result });
@@ -37,10 +37,10 @@ class UserController {
     const userId = req.params.userId;
     const data = req.body as IUser;
 
-    const [result, err] = await jobHandler(User.findByIdAndUpdate(userId, data));
+    const [_, err] = await jobHandler(User.findByIdAndUpdate(userId, data));
     if (err) return res.status(500).json({ err });
 
-    return res.status(201).json({ result });
+    return res.status(201).json({ message: 'update successfull' });
   }
 
   async deleteUser(req: Request, res: Response) {

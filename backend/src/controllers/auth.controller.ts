@@ -14,7 +14,7 @@ class AuthController {
   }
 
   check(req: Request, res: Response) {
-    logger.warn(req.session.id)
+    logger.warn(req.session.id);
     res.status(206).send('its okey');
   }
 
