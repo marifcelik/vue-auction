@@ -1,5 +1,6 @@
 import express from 'express';
 import session from 'express-session';
+import { createServer } from 'http';
 import pino from './utils/logger';
 import router from './routers';
 import { redisStore } from './utils/db';
@@ -28,7 +29,7 @@ app.get('/', (_req, res) => {
   res.send('kartaca cekirdekten yetisenler case');
 });
 
-export default app;
+export default createServer(app);
 
 // for req.session.user issue
 declare module 'express-session' {
