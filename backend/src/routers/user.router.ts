@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/create', userController.createUser);
 
-router.use(authCheck)
+router.use(authCheck);
 
 router.get('/get', userController.getAllUsers);
 router.get('/get/:userId', userController.getUser);

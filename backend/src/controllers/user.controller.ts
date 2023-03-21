@@ -27,7 +27,9 @@ class UserController {
   }
 
   async getAllUsers(_req: Request, res: Response) {
-    const [result, err] = await jobHandler(User.find().select('-password -createdAt -updatedAt'));
+    const [result, err] = await jobHandler(
+      User.find().select('-password -createdAt -updatedAt')
+    );
     if (err) return res.status(500).json({ err });
 
     return res.status(200).json({ result });

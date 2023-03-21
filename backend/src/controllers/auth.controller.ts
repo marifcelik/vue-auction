@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { COOKIE_NAME } from '../config';
 import { logger } from '../utils/logger';
+import { COOKIE_NAME } from '../config';
 
 class AuthController {
   login(req: Request, res: Response) {
@@ -8,14 +8,13 @@ class AuthController {
     if (username === 'arif' && password === 'deneme') {
       const user = { username, role: 'admin' };
       req.session.user = user;
-      return res.sendStatus(200);
+      return res.status(200).json({ msg: 'ok' });
     }
     res.status(400).send({ msg: 'username or password is incorrect' });
   }
 
   check(req: Request, res: Response) {
-    logger.warn(req.session.id);
-    res.status(206).send('its okey');
+    res.status(206).json({ msg: 'auth okey' });
   }
 
   logout(req: Request, res: Response) {
