@@ -1,8 +1,7 @@
-import { createWebHistory } from 'vue-router'
-import { createRouter } from 'vue-router'
+import { createRouter, createWebHistory, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import About from './components/About.vue'
-import { RouterView } from 'vue-router'
+import Contact from './components/Contact.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -14,6 +13,7 @@ const router = createRouter({
       children: [
         { path: '', name: 'index', component: HelloWorld },
         { path: 'about', name: 'about', component: About },
+        { path: 'contact', name: 'contact', component: Contact },
       ]
     }
   ]

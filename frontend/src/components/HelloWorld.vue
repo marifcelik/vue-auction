@@ -3,14 +3,29 @@ import store from '../store';
 
 defineProps({
   msg: String,
-})
+});
+
+async function healthcheck() {
+  const data = await fetch('http://localhost:5048/auth/check', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include'
+  })
+  if (data.ok) {
+    const jj = await data.json()
+    console.log(jj)
+  }
+
+}
 </script>
 
 <template>
+  <button @click="healthcheck">health check</button>
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="store.count++">count is {{ store.count }}</button>
+    <button type="button" @click="store.increment()">count is {{ store.count }}</button>
+    <button type="button" @click="store.decrement()">çıkar</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
