@@ -7,9 +7,10 @@ const router = express.Router();
 
 router.use('/user', userRouter);
 router.use('/auth', authRouter);
-router.use('/offer', offerRouter)
+router.use('/offer', offerRouter);
 
-router.get('/healthcheck', (_req, res) => {
+router.get('/healthcheck', (req, res) => {
+  console.log(req.session.user)
   res.sendStatus(200);
 });
 

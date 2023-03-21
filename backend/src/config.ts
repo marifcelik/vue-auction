@@ -3,8 +3,7 @@ import { expand } from 'dotenv-expand';
 
 expand(dotenv.config());
 
-export const 
-  HOST = process.env.HOST ?? 'localhost',
+export const HOST = process.env.HOST ?? 'localhost',
   PORT = process.env.PORT ?? 5048,
   DB = process.env.DB ?? 'kartaca',
   DB_HOST = process.env.DB_HOST ?? '127.0.0.1',
