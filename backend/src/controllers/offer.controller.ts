@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Offer, { IOffer } from '../models/Offer.model';
+import Offer, { IOffer } from '../models/Bid.model';
 import jobHandler from '../utils/jobHandler';
 
 class OfferController {
