@@ -4,7 +4,9 @@ const store = reactive({
   count: 5,
   increment() { this.count++ },
   decrement() { this.count-- },
-  userId: ''
+  userId: '',
+  ws: undefined,
+  messages: []
 })
 
 export default store

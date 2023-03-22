@@ -5,6 +5,7 @@ const user = ref('')
 const password = ref('')
 
 async function handleSubmit() {
+    console.log('current url:', document.location.pathname)
     const logIn = await fetch('http://localhost:5048/auth/login', {
         method: 'POST',
         credentials: 'include',
@@ -13,7 +14,7 @@ async function handleSubmit() {
     })
     if (logIn.ok) {
         console.log('login ok')
-        console.log(logIn.headers)
+        console.log(logIn)
         const jj = await logIn.json()
         console.group(jj)
     }

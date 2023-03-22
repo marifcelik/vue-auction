@@ -1,25 +1,40 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
+import store from '../store';
 
-const connection = ref(null)
-const messages = ref([])
+const { count, ws } = store
+console.log(count)
 
-const ws = new WebSocket('ws://localhost:5048/')
+onUnmounted(() => {
+  ws.close()
+  store.messages = []
+})
 
-ws.onopen = () => {
+if (!ws) {
+  ws = new WebSocket('ws://localhost:5048/deneme/?prod=2')
+  ws.onopen = () => {
     console.log('ws opened')
+  }
+
+  ws.onmessage = (event) => {
+    store.messages.push(event.data)
+    console.log(event.data)
+  }
+
+  ws.onclose = () => ws = undefined
 }
 
-ws.onmessage = (event) => {
-
+function listClients() {
+  console.log(ws.onmessage.toString())
+  ws.send(JSON.stringify({
+    type: 'list'
+  }))
 }
-
 </script>
 
 <template>
-    connection is {{ connection }}
-    messages: <br>
-    <ul>
-        <li v-for="(msg, i) in messages" :key="i">{{ msg }}</li>
-    </ul>
+  connection is {{ ws ? 'found' : 'none' }} <br>
+  <button v-if="ws" @click="listClients">list clients</button> <br>
+  messages: <br>
+  <p>{{ store.messages }}</p>
 </template>
