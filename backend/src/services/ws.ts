@@ -1,60 +1,81 @@
 import { Request, Response } from 'express';
-// import { parse as parseUrl } from 'url';
 import { WebSocket, WebSocketServer } from 'ws';
 import server, { sessionParser } from '../server';
 import { logger } from '../utils/logger';
 
-type Offer = {
+type Bid = {
   user: string;
   product: number;
-  offer: number;
+  bid: number;
 };
+type WsConn = {
+  id: string,
+  product: string
+}
+type WsReq = {
+  type: string,
+  data?: Bid,
+}
 
-// REVIEW: seperate ws for each /path
-const wssA = new WebSocketServer({ noServer: true });
-// const wssB = new WebSocketServer({ noServer: true });
-// const wssC = new WebSocketServer({ noServer: true });
+declare module 'ws' {
+  export interface WebSocket {
+    clientId: string
+  }
+}
 
-// TODO: authenticate user
+const wss = new WebSocketServer({ noServer: true });
+let websockets: WsConn[] = []
+
 server.on('upgrade', (req: Request, socket, head) => {
   sessionParser(req, {} as Response, () => {
-    logger.info('inside session parser');
-    console.log(req.session.user);
     if (!req.session.user) {
       logger.warn('unauthorized ws request');
       socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
       socket.destroy();
       return;
     }
-    logger.info('session is parsed');
 
-    wssA.handleUpgrade(req, socket, head, (ws) => {
-      ws.emit('connection', ws, req);
+    wss.handleUpgrade(req, socket, head, (ws) => {
+      const clientId = crypto.randomUUID();
+      const product = new URL(req.url, `http://${req.headers.host}`).searchParams.get('prod') ?? '0'
+
+      logger.info(product)
+      ws.clientId = clientId
+      websockets.push({ id: clientId, product })
+      wss.emit('connection', ws, req);
     });
   });
-  // const { pathname } = parseUrl(req.url)
 });
 
-wssA.on('connection', (ws) => {
-  const clientId = crypto.randomUUID();
-  logger.info(`ws connection ${clientId}`);
+wss.on('connection', (ws, req) => {
+  logger.info(`ws connection ${ws.clientId}`);
+  logger.info(`ws url : ${req.url}`)
 
   ws.onmessage = (event) => {
     try {
-      const { type, data }: { type: string; data: Offer } = JSON.parse(event.data.toString());
+      const { type, data }: WsReq = JSON.parse(event.data.toString());
       ws.emit(type, data);
     } catch (err) {
-      logger.warn('incorrect message type from ' + clientId);
+      logger.warn('incorrect message type from ' + ws.clientId);
       logger.warn('message : ' + event.data);
-      ws.send(event.data);
+      ws.send(JSON.stringify(err));
     }
   };
 
-  ws.send('your id is : ' + clientId);
+  ws.send('your id is : ' + ws.clientId);
 
-  ws.on('bidding', (offer: Offer) => {
-    wssA.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) client.send(JSON.stringify(offer));
+  ws.on('bidding', (bid: Bid) => {
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) client.send(JSON.stringify(bid));
     });
   });
+
+  ws.on('list', () => {
+    ws.send(JSON.stringify(websockets))
+  })
+
+  ws.on('close', (code, reason) => {
+    logger.info({ msg: 'ws connection close', code, reason })
+    websockets = websockets.filter(openWs => openWs.id !== ws.clientId)
+  })
 });

@@ -5,7 +5,7 @@ import cors from 'cors';
 import pino from './utils/logger';
 import router from './routers/router';
 import { redisStore } from './utils/db';
-import { COOKIE_NAME, SECRET } from './config';
+import { COOKIE_MAXAGE, COOKIE_NAME, SECRET } from './config';
 
 const app = express();
 const sessionParser = session({
@@ -15,7 +15,7 @@ const sessionParser = session({
   rolling: true,
   saveUninitialized: false,
   secret: SECRET,
-  cookie: { maxAge: 1000 * 60, sameSite: 'strict', httpOnly: false, secure: false }
+  cookie: { maxAge: COOKIE_MAXAGE, sameSite: 'strict', httpOnly: false, secure: false }
 });
 
 // TODO: integrate swagger
