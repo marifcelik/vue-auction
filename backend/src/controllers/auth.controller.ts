@@ -13,7 +13,7 @@ class AuthController {
     res.status(400).send({ msg: 'username or password is incorrect' });
   }
 
-  check(req: Request, res: Response) {
+  check(_: Request, res: Response) {
     res.status(206).json({ msg: 'auth okey' });
   }
 
@@ -22,7 +22,7 @@ class AuthController {
       if (err) logger.warn(err);
     });
     res.clearCookie(COOKIE_NAME);
-    res.sendStatus(200);
+    res.status(200).json({ msg: 'ok' });
   }
 }
 

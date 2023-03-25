@@ -1,15 +1,15 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 // TODO: validate schema, maybe use typegoose
-export interface IOffer {
+export interface IBid {
   userId: Schema.Types.ObjectId;
   productId: number;
   price: number;
 }
 
-export interface IOfferModal extends IOffer, Document {}
+export interface IBidModal extends IBid, Document {}
 
-const userSchema = new Schema<IOffer>(
+const userSchema = new Schema<IBid>(
   {
     userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     productId: { type: Number, required: true },
@@ -18,4 +18,4 @@ const userSchema = new Schema<IOffer>(
   { timestamps: true }
 );
 
-export default mongoose.model<IOfferModal>('offer', userSchema);
+export default mongoose.model<IBidModal>('Bid', userSchema);
