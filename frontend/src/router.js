@@ -1,22 +1,43 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import About from './components/About.vue'
-import Contact from './components/Contact.vue'
+import store from './store'
+import HelloWorld from './views/HelloWorld.vue'
+import Login from './views/Login.vue'
+import Logout from './components/Logout.vue'
+import Register from './views/Register.vue'
+import Contact from './views/Contact.vue'
+import Products from './views/Products.vue'
 
 const router = createRouter({
   history: createWebHistory(),
+  linkActiveClass: 'active',
   routes: [
     {
       path: '/',
-      name: 'home',
       component: RouterView,
       children: [
         { path: '', name: 'index', component: HelloWorld },
-        { path: 'about', name: 'about', component: About },
+        { path: 'login', name: 'login', component: Login },
+        { path: 'logout', name: 'logout', component: Logout },
         { path: 'contact', name: 'contact', component: Contact },
+        { path: 'register', name: 'register', component: Register }
       ]
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: Products,
+      meta: { requireAuth: true }
     }
   ]
+})
+
+router.beforeEach((to, from) => {
+  if (to.meta.requireAuth && !store.isLoggedIn) {
+    return {
+      name: 'login',
+      query: { redirect: to.name }
+    }
+  }
 })
 
 export default router
