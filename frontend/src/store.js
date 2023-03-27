@@ -4,12 +4,9 @@ const store = reactive({
   count: 5,
   increment() { this.count++ },
   decrement() { this.count-- },
-  isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
-  /** @type {WebSocket | undefined} */
-  ws: undefined,
-  messages: []
+  userId: localStorage.getItem('userId')
 })
 
-watchEffect(() => localStorage.setItem('isLoggedIn', store.isLoggedIn))
+watchEffect(() => localStorage.setItem('userId', store.userId))
 
 export default store

@@ -18,11 +18,11 @@ async function healthcheck() {
   <button @click="healthcheck">health check</button>
 
   <div class="card">
-    <button type="button" class="btn" @click="store.increment()">count is {{ store.count }}</button>
+    <button type="button" class="btn" @click="store.increment()">
+      count is {{ store.count }}
+    </button>
     <button type="button" class="btn" @click="store.decrement()">çıkar</button>
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>

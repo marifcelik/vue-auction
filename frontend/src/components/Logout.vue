@@ -1,21 +1,20 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
+import { SERVER } from '../config';
 import store from '../store';
 
-const router = useRouter()
+const router = useRouter();
 
-const req = await fetch('http://localhost:5048/auth/logout', {
+const req = await fetch(`${SERVER}/auth/logout`, {
   method: 'POST',
   credentials: 'include',
   headers: { 'Content-Type': 'application/json' }
 });
 if (req.ok) {
   await req.json();
-  store.isLoggedIn = false
-  router.push({ name: 'index' })
+  store.userId = undefined;
+  router.push({ name: 'index' });
 }
 </script>
 
-<template>
-  
-</template>
+<template></template>
