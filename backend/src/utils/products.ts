@@ -1,35 +1,31 @@
 // demo
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
-
 type Product = {
+  id: number,
   name: string,
   price: number,
   image: string,
   details?: string
 };
 
-function image(name: string) {
-  const __dirname = dirname(fileURLToPath(import.meta.url))
-  return join(__dirname, '../../public', name)
-}
-
 const products: Product[] = [
   {
+    id: 1,
     name: 'the starry night',
     price: 10000,
-    image: image('prod1.webp'),
+    image: 'prod1.webp',
     details: 'tablo'
   },
   {
+    id: 2,
     name: 'macbook pro m2',
-    price: 2000,
-    image: image('macbook.jpg')
+    price: 7000,
+    image: 'macbook.jpg'
   },
   {
+    id: 3,
     name: 'omitrix',
-    price: 6000,
-    image: image('omitrix.webp')
+    price: 60000,
+    image: 'omitrix.webp'
   }
 ];
 

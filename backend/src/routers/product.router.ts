@@ -1,12 +1,11 @@
 import express from 'express'
+import productController from '../controllers/product.controller'
 import authCheck from '../middlewares/auth.middleware'
-import products from '../utils/products'
 
 const router = express.Router()
 
 router.use(authCheck)
-router.get('/', (_, res) => {
-  res.json(products)
-})
+router.get('/', productController.getAll)
+router.get('/:prodId', productController.getProdById)
 
 export default router

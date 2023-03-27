@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
 import Bid, { IBid } from '../models/Bid.model';
+import { wsBroadcast } from '../services/ws';
 import jobHandler from '../utils/jobHandler';
 
 class BidController {
   async createBid(req: Request, res: Response) {
     const data = req.body as IBid;
-    const bid = new Bid(data);
 
-    const [result, err] = await jobHandler(bid.save());
+    const [result, err] = await jobHandler(Bid.create(data));
     if (err) return res.status(500).json({ err });
 
+    wsBroadcast(data)
     return res.status(201).json({ result });
   }
 

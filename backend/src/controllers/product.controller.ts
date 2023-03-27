@@ -1,39 +1,19 @@
-import { Request, Response } from 'express';
-import Product, { IProduct } from '../models/Product.model';
-import jobHandler from '../utils/jobHandler';
+import { Request, Response } from "express";
+import products from "../utils/products";
 
-class ProductController {
-  async createProduct(req: Request, res: Response) {
-    const data = req.body as IProduct;
-    const prod = new Product(data);
-
-    const [result, err] = await jobHandler(prod.save());
-    if (err) return res.status(500).json({ err });
-
-    return res.status(201).json({ result });
+class ProdController {
+  getAll(_: Request, res: Response) {
+    res.status(200).json(products)
   }
 
-  async getProductById(req: Request, res: Response) {
-    const productId = req.params.id;
+  getProdById(req: Request, res: Response) {
+    const prodId = parseInt(req.params.prodId)
+    const prod = products.find(prod => prod.id === prodId)
+    if (!prod)
+      return res.sendStatus(404);
 
-    const [result, err] = await jobHandler(Product.findOne({ _id: productId }));
-    if (err) return res.status(500).json({ err });
-
-    return result
-      ? res.status(200).json({ result })
-      : res.status(404).json({ message: 'product not found' });
-  }
-
-  async getProductsByUserId(req: Request, res: Response) {
-    const userId = req.params.userId;
-
-    const [result, err] = await jobHandler(Product.find({ userId }));
-    if (err) return res.status(500).json({ err });
-
-    return result
-      ? res.status(200).json({ result })
-      : res.status(404).json({ message: 'Product not found' });
+    res.status(200).json(prod)
   }
 }
 
-export default new ProductController();
+export default new ProdController()

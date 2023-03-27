@@ -12,7 +12,7 @@ export interface IProduct {
 
 export interface IProductModal extends IProduct, Document { }
 
-const userSchema = new Schema<IProduct>(
+const productSchema = new Schema<IProduct>(
 	{
 		name: { type: String, required: true },
 		userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
@@ -24,4 +24,4 @@ const userSchema = new Schema<IProduct>(
 	{ timestamps: true }
 );
 
-export default mongoose.model<IProductModal>('Product', userSchema);
+export default mongoose.model<IProductModal>('Product', productSchema);

@@ -11,6 +11,6 @@ export const HOST = process.env.HOST ?? 'localhost',
   DB_CONN_STR = process.env.DB_CONN_STR ?? `mongodb://${DB_HOST}:${DB_PORT}/${DB}`,
   SECRET = process.env.SECRET ?? 'do not use secret like this',
   COOKIE_NAME = process.env.COOKIE_NAME ?? 'sessionid',
-  COOKIE_MAXAGE = (process.env.COOKIE_MAXAGE ?? 1000 * 30) as number
+  COOKIE_MAXAGE = (process.env.COOKIE_MAXAGE ?? 1000 * 60 * 60 * 24) as number
 
 export default { HOST, PORT, DB, DB_HOST, DB_PORT, SECRET, COOKIE_NAME };

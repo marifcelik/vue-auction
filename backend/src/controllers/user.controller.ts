@@ -3,7 +3,6 @@ import { IUser } from '../models/User.model';
 import User from '../models/User.model';
 import jobHandler from '../utils/jobHandler';
 
-// TODO: replace status codes with the jobHandler returns
 class UserController {
   async createUser(req: Request, res: Response) {
     const data = req.body as IUser;

@@ -9,11 +9,6 @@ const router = express.Router();
 router.use('/user', userRouter);
 router.use('/auth', authRouter);
 router.use('/bid', bidRouter);
-router.use('/products', productRouter)
-
-router.get('/healthcheck', (req, res) => {
-  console.log(req.session.user)
-  res.sendStatus(200);
-});
+router.use('/product', productRouter)
 
 export default router;

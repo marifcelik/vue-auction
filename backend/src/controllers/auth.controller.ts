@@ -8,13 +8,13 @@ class AuthController {
     if (username === 'arif' && password === 'deneme') {
       const user = { username, role: 'admin' };
       req.session.user = user;
-      return res.status(200).json({ msg: 'ok' });
+      return res.status(200).json({ msg: 'ok', id: 1 });
     }
     res.status(400).send({ msg: 'username or password is incorrect' });
   }
 
   check(_: Request, res: Response) {
-    res.status(206).json({ msg: 'auth okey' });
+    res.sendStatus(200);
   }
 
   logout(req: Request, res: Response) {
