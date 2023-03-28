@@ -10,22 +10,24 @@ type Product = {
 const products: Product[] = [
   {
     id: 1,
-    name: 'the starry night',
+    name: 'The Starry Night',
     price: 10000,
-    image: 'prod1.webp',
-    details: 'tablo'
+    image: 'starrynight.jpg',
+    details: "Van Gogh'un 1899 yılında, akıl hastanesine kaldığı sırada yaptığı ünlü bir resim."
   },
   {
     id: 2,
-    name: 'macbook pro m2',
+    name: 'Macbook Pro M2',
     price: 7000,
-    image: 'macbook.jpg'
+    image: 'macbook.jpg',
+    details: 'Yeni bir Apple dizüstü bilgisayar modeli.'
   },
   {
     id: 3,
-    name: 'omitrix',
+    name: 'Omitrix',
     price: 60000,
-    image: 'omitrix.webp'
+    image: 'omitrix.jpg',
+    details: 'DNA kodlaması sayesinde kullanıcısının farklı yaratıklara dönüşmesine olanak tanıyan akıllı saat benzeri bir cihaz.'
   }
 ];
 
