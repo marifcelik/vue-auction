@@ -2,11 +2,8 @@ import mongoose from 'mongoose';
 import { Store } from 'express-session';
 import { createClient } from 'redis';
 import RedisStore from 'connect-redis';
-import { logger } from './logger';
+import { logger } from '../utils/logger';
 import { DB_CONN_STR } from '../config';
-
-/* REVIEW: im not sure about this structure. look at again.
-maybe better error handling, or drop redis connection to another file */
 
 try {
   await mongoose.connect(DB_CONN_STR);

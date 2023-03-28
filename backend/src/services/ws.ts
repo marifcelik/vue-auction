@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
+import { Schema } from 'mongoose';
 import { WebSocket, WebSocketServer } from 'ws';
-import { IBid } from '../models/Bid.model';
+import { IBid, SerializedBid } from '../models/Bid.model';
 import server, { sessionParser } from '../server';
 import { logger } from '../utils/logger';
 
-export function wsBroadcast(bid: IBid) {
+export function wsBroadcast(bid: SerializedBid) {
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN && client.product == bid.productId)
       client.send(JSON.stringify(bid));
@@ -32,7 +33,7 @@ server.on('upgrade', (req: Request, socket, head) => {
       const clientId = crypto.randomUUID();
 
       ws.clientId = clientId
-      ws.product = parseInt(product)
+      ws.product = product
       wss.emit('connection', ws, req);
     });
   });
@@ -67,6 +68,6 @@ wss.on('connection', (ws, req) => {
 declare module 'ws' {
   export interface WebSocket {
     clientId: string;
-    product: number;
+    product: Schema.Types.ObjectId | string | number;
   }
 }
