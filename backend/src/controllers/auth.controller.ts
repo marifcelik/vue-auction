@@ -1,20 +1,26 @@
 import { Request, Response } from 'express';
-import { logger } from '../utils/logger';
 import { COOKIE_NAME } from '../config';
+import { logger } from '../utils/logger';
+import jobHandler from '../utils/jobHandler';
+import { remainingTime } from '../utils/countdown'
+import User from '../models/User.model';
 
 class AuthController {
-  login(req: Request, res: Response) {
+  async login(req: Request, res: Response) {
     const { username, password } = req.body;
-    if (username === 'arif' && password === 'deneme') {
-      const user = { username, role: 'admin' };
-      req.session.user = user;
-      return res.status(200).json({ msg: 'ok', id: 1 });
-    }
-    res.status(400).send({ msg: 'username or password is incorrect' });
+
+    const [result, err] = await jobHandler(User.login(username, password))
+
+    if (err)
+      return res.status(400).send({ msg: 'username or password is incorrect' });
+
+    req.session.user = { username };
+    return res.status(200).json({ msg: 'ok', coutdown: remainingTime(), result });
   }
 
   check(_: Request, res: Response) {
-    res.sendStatus(200);
+    console.log(remainingTime())
+    res.status(200).json({ remainingTime: remainingTime() });
   }
 
   logout(req: Request, res: Response) {

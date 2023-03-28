@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Bid, { IBid } from '../models/Bid.model';
 import { wsBroadcast } from '../services/ws';
 import jobHandler from '../utils/jobHandler';
+import userController from './user.controller';
 
 class BidController {
   async createBid(req: Request, res: Response) {
@@ -10,15 +11,17 @@ class BidController {
     const [result, err] = await jobHandler(Bid.create(data));
     if (err) return res.status(500).json({ err });
 
-    wsBroadcast(data)
+    const user = await userController.getUserById(data.userId)
+    wsBroadcast({ ...data, username: user.username, id: result._id })
+
     return res.status(201).json({ result });
   }
 
   async getBidsByProductId(req: Request, res: Response) {
-    const productId = req.params.productId;
+    const { productId } = req.params;
 
     const [result, err] = await jobHandler(
-      Bid.find({ _id: productId }, undefined, { sort: { bid: -1 } })
+      Bid.find({ productId: productId }, undefined, { sort: { price: -1 } }).populate('userId', 'username').select('-createdAt -updatedAt')
     );
     if (err) return res.status(500).json({ err });
 
@@ -28,7 +31,7 @@ class BidController {
   }
 
   async getBidsByUserId(req: Request, res: Response) {
-    const userId = req.params.userId;
+    const { userId } = req.params;
 
     const [result, err] = await jobHandler(Bid.find({ userId }));
     if (err) return res.status(500).json({ err });
