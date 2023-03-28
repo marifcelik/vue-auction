@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router'
 import { SERVER } from './config'
-import store from './store'
+import store, { timer } from './store'
 import Logout from './components/Logout.vue'
-import HelloWorld from './views/HelloWorld.vue'
+import Index from './views/Index.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Products from './views/Products.vue'
@@ -14,9 +14,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: RouterView,
       children: [
-        { path: '', name: 'index', component: HelloWorld },
+        { path: '', name: 'index', component: Index },
         { path: 'login', name: 'login', component: Login },
         { path: 'logout', name: 'logout', component: Logout },
         { path: 'register', name: 'register', component: Register }
@@ -44,8 +43,12 @@ router.beforeEach(async (to, from) => {
     const check = await fetch(`${SERVER}/auth/check`, {
       credentials: 'include'
     })
-    if (!check.ok)
-      store.userId = undefined
+    if (check.ok) {
+      store.countdown ||= (await check.json()).remainingTime
+      !timer.id && timer.setTimer()
+    }
+    else
+      store.userId = ''
   }
 
   if (to.meta.requireAuth && !store.userId) {
