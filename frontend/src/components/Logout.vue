@@ -12,7 +12,8 @@ const req = await fetch(`${SERVER}/auth/logout`, {
 });
 if (req.ok) {
   await req.json();
-  store.userId = undefined;
+  store.userId = '';
+  store.username = '';
   router.push({ name: 'index' });
 }
 </script>
