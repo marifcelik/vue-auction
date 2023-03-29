@@ -42,14 +42,11 @@ async function handleSubmit() {
   const res = await req.json();
   if (req.ok && res.result._id) {
     store.userId = res.result._id;
+    store.username = res.result.username;
     router.push('/');
   } else if (res.err?.code === 11000) {
-    const type =
-      Object.keys(res.err?.keyPattern)[0] === 'username' ? 'kullanıcı adı' : 'e mail';
-    store.toast(
-      `Bu ${type} daha önceden kullanılmış, lütfen başka bir ${type} kullanın`,
-      'error'
-    );
+    const type = Object.keys(res.err?.keyPattern)[0] === 'username' ? 'kullanıcı adı' : 'e mail';
+    store.toast(`Bu ${type} daha önceden kullanılmış, lütfen başka bir ${type} kullanın`, 'error');
   }
 }
 </script>
@@ -93,8 +90,7 @@ async function handleSubmit() {
             <label for="username" class="label">Kullanıcı Adı</label>
             <input v-model="formData.username" class="form-input" type="username" name="username" id="username" />
             <label v-if="v$.username.$error" class="label">
-              <span v-if="v$.username.$errors[0].$validator === 'notContainSpace'" class="error-label">Kullanıcı adı boşluk içeremez
-              </span>
+              <span v-if="v$.username.$errors[0].$validator === 'notContainSpace'" class="error-label">Kullanıcı adı boşluk içeremez</span>
               <span v-else class="error-label">Kullanıcı adı boş geçilemez</span>
             </label>
           </div>
