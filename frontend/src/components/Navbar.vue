@@ -31,11 +31,13 @@ onBeforeMount(() => {
         <img src="/icon.png" alt="logo" class="h-full" />
         <h2>uphammer</h2>
       </RouterLink>
-      <h1 v-if="store.username" class="text-lg ml-5">Merhaba, {{ store.username }}!</h1>
-      <h1 v-if="store.username" class="text-lg ml-10">
-        Kalan süre :
-        {{ new Date(store.countdown * 1000).toISOString().substring(11, 19) }}
-      </h1>
+      <template v-if="store.username && store.username !== 'null'">
+        <h1 class="text-lg ml-5">Merhaba, {{ store.username }}!</h1>
+        <h1 class="text-lg ml-10">
+          Kalan süre :
+          {{ new Date(store.countdown * 1000).toISOString().substring(11, 19) }}
+        </h1>
+      </template>
     </div>
     <div class="flex-none">
       <ul class="menu menu-horizontal px-1">
