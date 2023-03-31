@@ -1,0 +1,30 @@
+services:
+  redis:
+    image: redis
+    ports:
+      - "6379"
+  
+  db:
+    image: mongo
+    ports:
+      - "27017"
+  
+  server:
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DB_HOST=db
+      - DB_PORT=27017
+      - ORIGIN=client https://localhost:7073 https://192.168.1.10:7073
+      - COUNTDOWN=300
+    depends_on:
+      - db
+      - redis
+    build: ./backend
+    ports:
+      - "5048:5048"
+
+  client:
+    build: ./frontend
+    ports:
+      - "7073:443"

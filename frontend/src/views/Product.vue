@@ -1,5 +1,6 @@
 <script setup>
 import { onBeforeMount, onUnmounted, reactive, ref } from 'vue';
+import { nanoid } from 'nanoid'
 import { SERVER } from '../config';
 import store from '../store';
 
@@ -43,7 +44,7 @@ async function handleBid() {
   if (!newBid.price || isNaN(parseInt(newBid.price)))
     return store.toast('Lütfen geçerli bir teklif girin.', 'warning');
 
-  newBid.id = crypto.randomUUID();
+  newBid.id = nanoid();
   const bid = {
     type: 'bid',
     data: {

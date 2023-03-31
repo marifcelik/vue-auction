@@ -41,7 +41,7 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   if (store.userId) {
     const check = await fetch(`${SERVER}/auth/check`, {
-      credentials: 'include'
+      credentials: 'include',
     })
     if (check.ok) {
       store.countdown ||= (await check.json()).remainingTime

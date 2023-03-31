@@ -1,8 +1,8 @@
 import { reactive, watchEffect } from 'vue'
 
 const store = reactive({
-  userId: localStorage.getItem('userId'),
-  username: localStorage.getItem('username'),
+  userId: localStorage.getItem('userId') ?? '',
+  username: localStorage.getItem('username') ?? '',
   countdown: 0,
   toastShow: false,
   toastType: '',

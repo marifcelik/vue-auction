@@ -1,16 +1,17 @@
 import express from 'express';
 import session from 'express-session';
-import { createServer } from 'http';
+import { createServer } from 'https';
+import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 import pino from './utils/logger';
 import router from './routers/router';
 import { redisStore } from './services/db';
-import { COOKIE_MAXAGE, COOKIE_NAME, SECRET } from './config';
+import { COOKIE_MAXAGE, COOKIE_NAME, ORIGIN, SECRET } from './config';
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const originList: (string | undefined)[] = ['http://localhost:5173', 'http://192.168.1.11:5173', 'http://localhost:4173', 'http://192.168.1.3']
+const originList: string[] = ORIGIN.split(' ');
 const sessionParser = session({
   store: redisStore,
   name: COOKIE_NAME,
@@ -18,7 +19,7 @@ const sessionParser = session({
   rolling: true,
   saveUninitialized: false,
   secret: SECRET,
-  cookie: { maxAge: COOKIE_MAXAGE, sameSite: 'none', httpOnly: false, secure: false }
+  cookie: { maxAge: COOKIE_MAXAGE, sameSite: 'none', httpOnly: true, secure: true }
 });
 const app = express();
 
@@ -29,7 +30,7 @@ app.use(cors({
     else
       cb(new Error('not allowed by cors'))
   },
-  credentials: true
+  credentials: true,
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -44,7 +45,11 @@ app.get('/', (_req, res) => {
 });
 
 export { sessionParser };
-export default createServer(app);
+// export default createServer(app);
+export default createServer({
+  key: readFileSync('./ssl/private.key', 'utf8'),
+  cert: readFileSync('./ssl/server.crt', 'utf8')
+}, app);
 
 // for req.session.user issue
 declare module 'express-session' {
