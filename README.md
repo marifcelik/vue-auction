@@ -4,6 +4,30 @@ Merhaba. Bu proje, bir açık artırma web uygulamasıdır. Node.js ve Vue.js ku
 
 ## Kurulum
 
+Kurulum için, ana dizinde yer alan script dosyasını çalıştırabilirsiniz.
+```sh
+./start.sh
+```
+Script, docker compose ile uygulamayı ayağa kaldıracak ve 2 adet kullanıcı ekleyecektir. 4 adet container ayağa kalkacaktır:  
+* _name_-server-1
+* _name_-client-1
+* _name_-db-1
+* _name_-redis-1
+
+Gerekli ortam değişkenleri yaml dosyasının içine dahil edilmiştir.
+
+<br />  
+
+### docker compose
+
+Öncelikle, `docker-compose.yml` dosyasının bulunduğu, uygulamanın ana dizinine gitmelisiniz.
+
+```sh
+docker compose up
+```
+
+komutu ile containerları ayağa kaldırabilirsiniz.
+
 ### Container
 
 Dockerfile ile ayrı ayrı containerlar halinde çalıştırmak için;
@@ -23,28 +47,8 @@ docker run --rm -d -p 5173:80 --name client frontend
 
 <br />
 
-### docker compose
-
-Öncelikle, `docker-compose.yml` dosyasının bulunduğu, uygulamanın ana dizinine gitmelisiniz.
-
-```sh
-docker compose up
-```
-
-komutu ile containerları ayağa kaldırabilirsiniz. 4 adet container ayağa kalkacaktır:  
-* _name_-server-1
-* _name_-client-1
-* _name_-db-1
-* _name_-redis-1
-
- Gerekli ortam değişkenleri yaml dosyasının içine dahil edilmiştir.
-
-> mongo container' ında başlangıç değeri olarak gösterdiğim _/backend/db_ klasörünün izinlerinde, docker compose kullanımı sonrası sorun yaşadım. `up` komutu sonrası klasöre erişim hatası alırsanız klasörün izinlerini değiştirmeyi deneyebilirsiniz.
-```sh
-sudo chmod -R 777 ./backend/db
-```
-
 ---
+
 ## Tarayıcı Sertifika Sorunu
 
 Kullanıcı oturum bilgisinin, tarayıcı üzerinde `sessionid` adlı cookie ile iletilmesi ve tarayıcıların bu cookileri sadece https üzerinden kabul etmesi nedeniyle back-end ve front-end tarafında SSL kullanmam gerekti. Kullandığım sertifika doğrulanmış bir sertifika olmadığı için tarayıcılar sunucu-istemci arasındaki haberleşmeyi engelleyebiliyor.
