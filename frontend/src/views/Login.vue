@@ -28,6 +28,7 @@ async function handleSubmit() {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
+    mode: 'cors',
     body: JSON.stringify({ username: formData.username, password: formData.password })
   });
   if (logIn.ok) {
