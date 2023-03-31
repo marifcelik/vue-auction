@@ -1,7 +1,46 @@
-# Vue 3 + Vite
+## Ön Yüz / Front-end
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Ön Yüz, Vue.js çatısı ve Vite aracı kullanılarak yazılmıştır. Stil işlemleri için TailwindCSS ve DaisyUI kullanılmıştır.
 
-## Recommended IDE Setup
+Tech Stack:
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- Vue 3 (JavaScript)
+- Vue Router
+- Vuelidate
+- TailwindCSS
+- DaisyUI
+- AutoAnimate
+
+## Kullanım
+
+Projeyi yerel olarak test etmek için;
+
+```sh
+pnpm i
+pnpm run dev
+```
+
+komutlarını çalıştırabilirsiniz. Varsayılan olarak `5173` portunda çalışacak, sunucuya `5048` portunda istek atacaktır.
+
+## Dockerfile
+Uygulamayı, docker imajına çevirmek için, builder olarak `node:19.7-alpine`, sunucuya sunmak için `nginx:stable-alpine` imajlarını kullandım. 
+Gerekli nginx konfigürasyonlarınıda imaj içine dahil ettim ve http' den https' e yönlendirme gerçekleştirdim.
+
+## Adresler
+
+| Endpoint      | Auth | Açıklama                      |
+| ------------- | ---- | ----------------------------- |
+| /             |      | Ana sayfa                     |
+| /login        |      | Kullanıcı girişi              |
+| /logout       | ✔    | Kullanıcı çıkışı              |
+| /register     |      | Kullanıcı kaydı               |
+| /products     | ✔    | Tüm ürünlerin listesi         |
+| /products/:id | ✔    | Belirli ürünün teklif sayfası |
+| /\*           |      | 404                           |
+
+
+## Ortam Değişkenleri 
+| Değer            | Açıklama                | Varsayılan          |
+| ---------------- | ----------------------- | ------------------- |
+| VITE_SERVER_HOST | Sunucunun adresi        | `https://localhost` |
+| VITE_SERVER_PORT | Sunucunun port numarası | `5048`              |
