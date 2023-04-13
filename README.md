@@ -68,7 +68,11 @@ Firefox' ta bu işlem şu şekilde yapılabilir :
 
 Bu adımlardan sonra uygulama https://localhost:7073 adresinde çalışacaktır.
 
-Karşılama ekranından direkt olarak Ürünler sayfasına girebilirsiniz. Aktif bir oturum olmadığı için sizi Giriş Yap sayfasına atacaktır. Kullanıcı Adı: `admin`, Şifre: `123123` kullanıcısı öntanımlı olarak gelir. Kayıt Ol ekranından yeni kayıt yapılabilir.
+Karşılama ekranından direkt olarak Ürünler sayfasına girebilirsiniz. Aktif bir oturum olmadığı için sizi Giriş Yap sayfasına atacaktır. 
+* Kullanıcı Adı: `user1`, Şifre: `123123`
+* Kullanıcı Adı: `user2`, Şifre: `123123`  
+
+kullanıcıları öntanımlı olarak gelir. Kayıt Ol ekranından yeni kayıt yapılabilir.
 
 Giriş yapıldıktan sonra Ürünler sayfasına gidilebilir, Gezinme çubuğundaki (navbar) butonların yerini Ürünler ve Çıkış Yap butonları alır.
 
