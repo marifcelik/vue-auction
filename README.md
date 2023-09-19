@@ -1,4 +1,4 @@
-# Software Case
+# Vue Basic Auction App - Basit Açık Arttırma Uygulaması
 
 Merhaba. Bu proje, bir açık artırma web uygulamasıdır. Node.js ve Vue.js kullanılarak geliştirilmiştir. Kullanıcıların üyelik yapabileceği, oturum açıp kapatabileceği ve teklifleri canlı olarak takip edebileceği bir yapıdadır. Uygulama çalıştırıldığında ortam değişkeni olarak verilen süreden (varsayılan 5 dakika) geri sayıma başlar. Kullanıcılara fiyat verebileceği 3 adet statik ürün sunar.
 
